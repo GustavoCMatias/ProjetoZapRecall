@@ -12,42 +12,51 @@ export default function Cartao({ index, question, answer, setConcluidos, conclui
 
     const [resultadoBotao, setResultadoBotao] = React.useState("#333333")
     const [icone, setIcone] = React.useState(play)
+
+    const [dataTeste, setDataTeste] = React.useState("play-btn")
+    function Blank(){
+
+    }
     function cliqueResposta(resultado){
         setEstado(0)
         setConcluidos (concluidos + 1);
         setResultadoBotao(resultado)
         if(resultado === "#FF3030"){
             setIcone(errado)
+            setDataTeste("no-icon")
         }else if(resultado === "#FF922E"){
             setIcone(quase)
+            setDataTeste("partial-icon")
         } else{
             setIcone(certo)
+            setDataTeste("zap-icon")
         }
         
     }
     return (
         <>
-            <PerguntaFechada estado={estado} resultadoBotao={resultadoBotao}>
-                <p>Pergunta {index + 1}</p>
+            <PerguntaFechada estado={estado} resultadoBotao={resultadoBotao} data-test="flashcard">
+                <p data-test="flashcard-text">Pergunta {index + 1}</p>
                 <img 
                 src={icone} 
                 alt="icon" 
-                onClick={resultadoBotao === "#333333"? () => setEstado(1):''}
+                data-test={dataTeste}
+                onClick={resultadoBotao === "#333333"? () => setEstado(1):Blank()}
                 />
 
             </PerguntaFechada>
 
             <PerguntaAberta estado={estado}>
-                <p>{question}</p>
-                <img src={flip} alt="flip" onClick={() => setEstado(2)}/>
+                <p data-test="flashcard-text">{question}</p>
+                <img src={flip} alt="flip" data-test="turn-btn" onClick={() => setEstado(2)}/>
             </PerguntaAberta>
 
             <RespostaAberta estado={estado}>
-                <p>{answer}</p>
+                <p data-test="flashcard-text">{answer}</p>
                 <ContainerButoes>
-                    <button onClick={() => cliqueResposta("#FF3030")}>Não lembrei</button>
-                    <button onClick={() => cliqueResposta("#FF922E")}>Quase não lembrei</button>
-                    <button onClick={() => cliqueResposta("#2FBE34")}>Zap!</button>
+                    <button data-test="no-btn" onClick={() => cliqueResposta("#FF3030")}>Não lembrei</button>
+                    <button data-test="partial-btn" onClick={() => cliqueResposta("#FF922E")}>Quase não lembrei</button>
+                    <button data-test="zap-btn" onClick={() => cliqueResposta("#2FBE34")}>Zap!</button>
                 </ContainerButoes>
 
             </RespostaAberta>

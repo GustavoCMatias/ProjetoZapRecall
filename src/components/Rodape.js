@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 export default function Rodape({length, concluidos}) {
     return (
-        <FooterConcluidos>
+        <FooterConcluidos data-test="footer">
             <h1>
                 {concluidos}/{length} CONCLUÍDOS
             </h1>
