@@ -46,12 +46,12 @@ export default function Cartao({ index, question, answer, setConcluidos, conclui
 
             </PerguntaFechada>
 
-            <PerguntaAberta estado={estado}>
+            <PerguntaAberta estado={estado} data-test="flashcard">
                 <p data-test="flashcard-text">{question}</p>
                 <img src={flip} alt="flip" data-test="turn-btn" onClick={() => setEstado(2)}/>
             </PerguntaAberta>
 
-            <RespostaAberta estado={estado}>
+            <RespostaAberta estado={estado} data-test="flashcard">
                 <p data-test="flashcard-text">{answer}</p>
                 <ContainerButoes>
                     <button data-test="no-btn" onClick={() => cliqueResposta("#FF3030")}>Não lembrei</button>
