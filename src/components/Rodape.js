@@ -1,11 +1,11 @@
 import styled from "styled-components";
 
 
-export default function Rodape({length}) {
+export default function Rodape({length, concluidos}) {
     return (
         <FooterConcluidos>
             <h1>
-                0/{length} CONCLUÍDOS
+                {concluidos}/{length} CONCLUÍDOS
             </h1>
 
         </FooterConcluidos>

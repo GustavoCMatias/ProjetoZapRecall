@@ -3,6 +3,7 @@ import Logo from "./components/Logo";
 import Rodape from "./components/Rodape"
 import styled from "styled-components";
 import GlobalStyle from './globalStyles.js'
+import React from "react";
 
 
 const cards = [
@@ -17,15 +18,23 @@ const cards = [
 ]
 
 
+
+
 export default function App() {
+  const [concluidos, setConcluidos] = React.useState(0)    
   return (
     <>
       <GlobalStyle />
       <ScreenContainer>
         <Logo />
 
-        {cards.map((item, index) => <Cartao index={index} question={item.question} answer={item.answer} />)}
-        <Rodape length={cards.length}/>
+        {cards.map((item, index) => <Cartao index={index}
+          setConcluidos = {setConcluidos}
+          concluidos={concluidos}
+          question={item.question}
+          answer={item.answer} 
+          key = {index}/>)}
+        <Rodape length={cards.length} concluidos={concluidos} />
       </ScreenContainer>
     </>
   );

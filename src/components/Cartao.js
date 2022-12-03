@@ -1,16 +1,39 @@
 import styled from "styled-components"
 import play from "../assets/img/seta_play.png"
+import certo from "../assets/img/icone_certo.png"
+import quase from "../assets/img/icone_quase.png"
+import errado from "../assets/img/icone_erro.png"
 import flip from "../assets/img/seta_virar.png"
 import React from "react"
 
-export default function Cartao({ index, question, answer }) {
-    const [estado, setEstado] = React.useState(0)
+export default function Cartao({ index, question, answer, setConcluidos, concluidos}) {
+    /* 0 para pergunta fechada, 1 aberta e 2 para resposta*/
+    const [estado, setEstado] = React.useState(0) 
 
+    const [resultadoBotao, setResultadoBotao] = React.useState("#333333")
+    const [icone, setIcone] = React.useState(play)
+    function cliqueResposta(resultado){
+        setEstado(0)
+        setConcluidos (concluidos + 1);
+        setResultadoBotao(resultado)
+        if(resultado === "#FF3030"){
+            setIcone(errado)
+        }else if(resultado === "#FF922E"){
+            setIcone(quase)
+        } else{
+            setIcone(certo)
+        }
+        
+    }
     return (
         <>
-            <PerguntaFechada estado={estado}>
+            <PerguntaFechada estado={estado} resultadoBotao={resultadoBotao}>
                 <p>Pergunta {index + 1}</p>
-                <img src={play} alt="play" onClick={() => setEstado(1)}/>
+                <img 
+                src={icone} 
+                alt="icon" 
+                onClick={resultadoBotao === "#333333"? () => setEstado(1):''}
+                />
 
             </PerguntaFechada>
 
@@ -22,9 +45,9 @@ export default function Cartao({ index, question, answer }) {
             <RespostaAberta estado={estado}>
                 <p>{answer}</p>
                 <ContainerButoes>
-                    <button onClick={() => setEstado(0)}>Não lembrei</button>
-                    <button onClick={() => setEstado(0)}>Quase não lembrei</button>
-                    <button onClick={() => setEstado(0)}>Zap!</button>
+                    <button onClick={() => cliqueResposta("#FF3030")}>Não lembrei</button>
+                    <button onClick={() => cliqueResposta("#FF922E")}>Quase não lembrei</button>
+                    <button onClick={() => cliqueResposta("#2FBE34")}>Zap!</button>
                 </ContainerButoes>
 
             </RespostaAberta>
@@ -50,7 +73,8 @@ const PerguntaFechada = styled.div`
     font-weight: 700;
     font-size: 16px;
     line-height: 19px;
-    color: #333333;
+    color: ${props => props.resultadoBotao};
+    text-decoration: ${props => props.resultadoBotao === "#333333" ?'none':'line-through' };
     }
 `
 
